@@ -1,37 +1,42 @@
 module.exports = function(){
     var express = require('express');
     var router = express.Router();
+    const fs = require('fs');
 
-    function randomIndex(){
+
+   function randomIndex(){
       var index = 0;
-      index = Math.floor(Math.random() * 460);
+      index = Math.floor(Math.random() * 114);
       if (index < 3) { index = 3; }
       return index;
     }
 
-    /*Display home page */
-    function getQuotes(res, mysql, context, complete){
+    /*Display home page*/
+    function getQuotes(res, context, complete){
       var idx = randomIndex();
       var inserts = idx;
-      var sql ="SELECT quote FROM quotes WHERE quote_id=?;";
-          mysql.pool.query(sql, inserts, function(error, results, fields){
-              if(error){
-                  res.write(JSON.stringify(error));
-                  res.end();
-              }
-              context.quotes = results;
-              complete();
-          });
-      }
+              var result = ""
+              var quotation = ""
+              fs.readFile('quotes_test.json', (err, data) => {
+                  if (err) throw err;
+                  var quotation = JSON.parse(data);
+                  if (quotation.quotes[idx] === undefined){
+                    var result = "do or do not there is no try - yoda";
+                  }
+                  else{
+                    var result = quotation.quotes[idx].quote;
+                  }
+                  context.quotes = result;
+                  complete();
+              });
 
+      };
 
       /*Display all quotes.*/
-
     router.get('/', function(req, res){
         var callbackCount = 0;
         var context = {};
-        var mysql = req.app.get('mysql');
-        getQuotes(res, mysql, context, complete);
+        getQuotes(res, context, complete);
         function complete(){
             callbackCount++;
             if(callbackCount >= 1){
