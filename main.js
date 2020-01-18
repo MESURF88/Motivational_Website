@@ -15,7 +15,7 @@ app.engine('handlebars', handlebars.engine);
 app.use(bodyParser.urlencoded({extended:true}));
 app.use('/static', express.static('public'));
 app.set('view engine', 'handlebars');
-app.set('port', process.argv[2]);
+app.set('port', process.argv[1]); //changed form 2 to 1
 //app.set('mysql', mysql);
 
 app.use('/', require('./home.js'));
@@ -31,6 +31,7 @@ app.use(function(err, req, res, next){
     res.render('500');
 });
 
-app.listen(app.get('port'), function(){
-    console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
 });
