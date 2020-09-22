@@ -11,7 +11,7 @@ module.exports = function(){
       return index;
     }
 
-    /*Display home page*/
+    /*Random quote function*/
     function getQuotes(res, context, complete){
       var idx = randomIndex();
       var inserts = idx;
@@ -32,7 +32,7 @@ module.exports = function(){
 
       };
 
-    /*Display quotes.*/
+    /*Display page initially.*/
     router.get('/', function(req, res){
         var context = {};
         context.quotes = "do or do not there is no try - yoda";
