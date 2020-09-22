@@ -34,15 +34,10 @@ module.exports = function(){
 
     /*Display quotes.*/
     router.get('/', function(req, res){
-        var callbackCount = 0;
         var context = {};
-        getQuotes(res, context, complete);
-        function complete(){
-            callbackCount++;
-            if(callbackCount >= 1){
-                res.render('home', context);
-            }
-        }
+        context.quotes = "do or do not there is no try - yoda";
+        res.render('home', context);
+
     });
 
     /*Display quotes.*/
