@@ -32,7 +32,7 @@ module.exports = function(){
 
       };
 
-      /*Display all quotes.*/
+    /*Display quotes.*/
     router.get('/', function(req, res){
         var callbackCount = 0;
         var context = {};
@@ -42,9 +42,22 @@ module.exports = function(){
             if(callbackCount >= 1){
                 res.render('home', context);
             }
-
         }
     });
+
+    /*Display quotes.*/
+    router.post('/', function(req, res){
+      var callbackCount = 0;
+      var context = {};
+      getQuotes(res, context, complete);
+      function complete(){
+          callbackCount++;
+          if(callbackCount >= 1){
+              res.render('home', context);
+          }
+
+      }
+  });
 
 
     return router;
